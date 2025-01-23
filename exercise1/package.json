@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "jasmine": "^5.5.0"
+  },
+  "scripts": {
+    "jasmine:init": "jasmine init",
+    "jasmine": "jasmine"
+  }
+}
