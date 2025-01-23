@@ -2,12 +2,13 @@ const fetchUrlsWithConcurrency = require('./fetchUrlsWithConcurrency');
 
 describe('fetchUrlsWithConcurrency', () => {
 
-    // For example a max concurrency of 2
-    const maxConcurrency = 2;
     // Later I'll check maxActiveRequests is never more than maxConcurrency
     let activeRequests = 0;
     let maxActiveRequests = 0;
+    // Store the results
+    let results;
 
+    // Inputs
     const urls = [
         'https://test.com',
         'https://test.com',
@@ -15,6 +16,11 @@ describe('fetchUrlsWithConcurrency', () => {
         'https://test.com',
         'https://test.com'
     ];
+    // For example a max concurrency of 2
+    const maxConcurrency = 2;
+
+    // Outputs
+    const fakeResultForEachCall = 'a-fake-test-result'
 
 
 
@@ -30,7 +36,7 @@ describe('fetchUrlsWithConcurrency', () => {
                 setTimeout(() => {
                     activeRequests--;
                     // Return a JSON response that i will test later
-                    const body = JSON.stringify({ url, data: 'test-data' });
+                    const body = JSON.stringify({ url, data: fakeResultForEachCall });
                     resolve(new Response(body, {
                         status: 200,
                         headers: { 'Content-Type': 'application/json' },
@@ -38,12 +44,23 @@ describe('fetchUrlsWithConcurrency', () => {
                 }, 1); //Timout doesn't matter.
             });
         });
+        results = await fetchUrlsWithConcurrency(urls, maxConcurrency);
 
 
     });
 
+    // First test: Check that maximum active requests is less than the maximum concurrency defined.
     it('The maximum of active requests at the same time, should not exceed the given maxConcurrency', async () => {
-        results = await fetchUrlsWithConcurrency(urls, maxConcurrency);
         expect(maxActiveRequests).toBeLessThanOrEqual(maxConcurrency);
+    });
+
+    // Second test: Check each request returns the correct response (in this case fakeResultForEachCall)
+    it('should return the correct results for each URL', async () => {
+        expect(results.length).toBe(urls.length);
+
+        results.forEach((item, index) => {
+            expect(item.url).toBe(urls[index]);
+            expect(item.data).toBe(fakeResultForEachCall);
+        });
     });
 });
