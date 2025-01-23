@@ -41,3 +41,5 @@ async function main() {
     console.log(await fetchUrlsWithConcurrency(urls, 2))
 }
 main()
+
+module.exports = fetchUrlsWithConcurrency;
