@@ -1,12 +1,24 @@
 async function fetchURLsWithConcurrency(urls, maxConcurrency) {
     const calls = []; // I'll store all promises here in order to wait for all to finish with Promise.all
-    const currentConcurrency = 0; // I'll count how many fetch requests there are in parallel in order to block more fetch requests form executing
-    async function createCall(url) {
+    let currentConcurrency = 0; // I'll count how many fetch requests there are in parallel in order to block more fetch requests form executing
+    let maxIndexToRun = Math.min(urls.length, maxConcurrency);  // Fetch urls in order
+    async function createCall(i, url) {
+
+        while(i > maxIndexToRun && currentConcurrency <= maxConcurrency) {
+            //Here I'll wait until some priority fetch request have finish
+        }
+        ++currentConcurrency;
         const fetchResponse =  await fetch(url)
-        return await fetchResponse.json()
+        const jsonResponse = await fetchResponse.json()
+        --currentConcurrency;
+        ++maxIndexToRun;
+        return jsonResponse
+
     }
     for (let i = 0; i < urls.length; ++i) {
-        calls.push(createCall(urls[i]))
+        // I'll call of the promises, but some of them will
+        // take some time to finish because of the concurrency
+        calls.push(createCall(i, urls[i]))
     }
 
     return await Promise.all(calls)
