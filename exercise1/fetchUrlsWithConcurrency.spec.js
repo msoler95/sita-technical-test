@@ -41,7 +41,7 @@ describe('fetchUrlsWithConcurrency', () => {
                         status: 200,
                         headers: { 'Content-Type': 'application/json' },
                     }));
-                }, 1); //Timout doesn't matter.
+                }, 1); //Timout total time doesn't matter.
             });
         });
         results = await fetchUrlsWithConcurrency(urls, maxConcurrency);
