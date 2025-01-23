@@ -17,13 +17,10 @@ async function fetchUrlsWithConcurrency(urls, maxConcurrency) {
 
     // I create as many threads as the maxConcurrency lets me
     async function createThreads() {
-        return new Promise(res => {
-            const concurrency = Math.min(maxConcurrency, urls.length)
-            for (let i = 0; i < concurrency; ++i) {
-                threads.push(thread())
-            }
-            res()
-        })
+        const concurrency = Math.min(maxConcurrency, urls.length)
+        for (let i = 0; i < concurrency; ++i) {
+            threads.push(thread())
+        }
     }
 
      await createThreads()
