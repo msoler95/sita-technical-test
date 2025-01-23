@@ -1,11 +1,14 @@
 async function fetchURLsWithConcurrency(urls, maxConcurrency) {
     const calls = [];
+    async function createCall(url) {
+        const fetchResponse =  await fetch(url)
+        return await fetchResponse.json()
+    }
     for (let i = 0; i < urls.length; ++i) {
-        calls.push( (await fetch(urls[i])).json())
+        calls.push( createCall(urls[i]))
     }
 
-    const result =  await Promise.all(calls)
-    return result
+    return await Promise.all(calls)
 }
 
 async function run() {
