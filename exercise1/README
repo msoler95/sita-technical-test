@@ -1,7 +1,4 @@
-- In order to run the jasmine test use:
-npm i && npm run jasmine
-
-
-- The test file is in spec/fetchUrlsWithConcurrency.spec.js
-- The function tested is inside fetchUrlsWithConcurrency.js
+- In order to run the jasmine test use: npm i && npm run jasmine
+- The test file is in: spec/fetchUrlsWithConcurrency.spec.js
+- The function tested is: fetchUrlsWithConcurrency.js
 
