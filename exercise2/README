@@ -2,4 +2,4 @@
 node exercise2
 
 - The solution in inside the file exercise2.js and the name of the function is getLicense(n)
-- Basically what i'm doing is given the n, I get where the position where the letters should go. And then I calculate the number and the letters of the plate.
+- Basically what i'm doing is given the n, I get the position where the letters should go. And then I calculate the numbers and the letters of the plate.
