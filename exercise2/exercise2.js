@@ -71,17 +71,11 @@ function getLicense(n) {
     } else {
         offset = n - intervals[intervalIndex - 1];
     }
-    console.log('offset', offset)
 
-    console.log('intervalIndex', intervalIndex)
-    console.log('numberOfLettersInRightSide', numberOfLettersInRightSide)
-    console.log('numbersOfDigitsInLeftSide', numbersOfDigitsInLeftSide)
-    console.log('maxiumPosibleDigitToGenerate', maxiumPosibleDigitToGenerate)
     //The divider (without decimals) of n/maxiumPosibleDigitToGenerate are the letters (without converting to base 26)
     const rightLetters =Math.floor( offset / maxiumPosibleDigitToGenerate )
     //The remainer of n/maxiumPosibleDigitToGenerate are the digits without converting to base 26
     const leftDigits = offset % maxiumPosibleDigitToGenerate;
-    console.log('before converting '+  leftDigits + "-"+rightLetters)
     const leftDigitsString = getLeftWith0(leftDigits, numbersOfDigitsInLeftSide)
     const rightLettersAsLetters = getLettersAsLetters(rightLetters, numberOfLettersInRightSide)
     return leftDigitsString +rightLettersAsLetters
@@ -90,16 +84,9 @@ function getLicense(n) {
 
 
 }
-console.log('number 999999')
-console.log('result', getLicense(999999))
-console.log('---')
-console.log('number 1000001')
-console.log('result', getLicense(1000001))
-console.log('---')
-console.log('number 10000000')
-console.log('result', getLicense(10000000))
-console.log('---')
-console.log('number 100000000')
-console.log('result', getLicense(100000000))
 
-//console.log(getLicense(10000000000))
+
+console.log('Given the number 999999, the license number is: ', getLicense(999999))
+console.log('Given the number 1000001, the license number is: ', getLicense(1000001))
+console.log('Given the number 10000000, the license number is: ', getLicense(10000000))
+console.log('Given the number 100000000, the license number is: ', getLicense(100000000))
