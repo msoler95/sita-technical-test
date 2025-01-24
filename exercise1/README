@@ -1,4 +1,6 @@
 - In order to run the jasmine test use:
 npx jasmine fetchUrlsWithConcurrency.spec.js
 
-- The solution is the file fetchUrlsWithConcurrency.spec.js. I did it with jasmine because in Angular I use jasmine for testing.
+- The solution is the file fetchUrlsWithConcurrency.spec.js. I did it with jasmine because in Angular I use jasmine for testing. 
+- Basically what i'm doing in the test is faking the fetch and measuring the active requests.
+
