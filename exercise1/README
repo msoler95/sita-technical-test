@@ -1,4 +1,2 @@
 - In order to run the jasmine test use:
 npx jasmine fetchUrlsWithConcurrency.spec.js
-
-- The only thing I'm doing in the test is by faking fetch and measuring active requests, I prove the function respects the concurrency.
