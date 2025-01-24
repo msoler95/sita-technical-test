@@ -1,2 +1,4 @@
 - In order to run the jasmine test use:
 npx jasmine fetchUrlsWithConcurrency.spec.js
+
+- The solution is the file fetchUrlsWithConcurrency.spec.js. I did the test with jasmine because in angular I use jasmine for testing.
