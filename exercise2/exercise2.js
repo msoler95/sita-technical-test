@@ -9,6 +9,16 @@ function toBase26(val, length) {
     return result;
 }
 
+function getLeftWith0(number, positions) {
+    return number
+        .toString()
+        .padStart(positions, '0');
+}
+
+function getLettersAsLetters(rightLetters, numberOfLettersInRightSide) {
+    return toBase26(rightLetters, numberOfLettersInRightSide)
+}
+
 
 
 function findIntervalIndex(n, intervals) {
@@ -72,7 +82,9 @@ function getLicense(n) {
     //The remainer of n/maxiumPosibleDigitToGenerate are the digits without converting to base 26
     const leftDigits = offset % maxiumPosibleDigitToGenerate;
     console.log('before converting '+  leftDigits + "-"+rightLetters)
-    return leftDigits.toString()+'-'+toBase26(rightLetters, numberOfLettersInRightSide)
+    const leftDigitsString = getLeftWith0(leftDigits, numbersOfDigitsInLeftSide)
+    const rightLettersAsLetters = getLettersAsLetters(rightLetters, numberOfLettersInRightSide)
+    return leftDigitsString +rightLettersAsLetters
 
 
 
