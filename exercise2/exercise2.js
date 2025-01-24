@@ -39,26 +39,36 @@ function getLicense(n) {
         numberOfLettersInTheAlphabet**6,  // XXXXXX
     ]
     const intervalIndex = findIntervalIndex(n, intervals);
-    console.log('intervalIndex', intervalIndex)
+    //console.log('intervalIndex', intervalIndex)
     //The interval number of letters on the right side is equal to the intervalIndex (right side)
     const numberOfLettersInRightSide = intervalIndex;
     //And 6-numberOfLettersInRightSide is equal to the number of digits on the left side
     const numbersOfDigitsInLeftSide = 6-numberOfLettersInRightSide;
+    //And the maximum posible digit to generate now in the left side is 10^numbersOfDigitsInLeftSide
+    const maxiumPosibleDigitToGenerate =  10**numbersOfDigitsInLeftSide;
 
-    //Convert the digit index to a zero-padded string of length (6 - b) (leading zeros).
-    const leftNumber =Math.floor( intervalIndex === 0 ? n : ( intervals[intervalIndex] / n ))
-    const rightNumber = intervalIndex=== 0 ? "" : toBase26(intervals[intervalIndex] % n )
-    console.log('leftNumber', leftNumber)
-    console.log('rightNumber', rightNumber)
-    return leftNumber.toString()+rightNumber.toString()
+    //The divider (without decimals) of n/maxiumPosibleDigitToGenerate are the letters (without converting to base 26)
+    const rightLetters =Math.floor( n / maxiumPosibleDigitToGenerate )
+    //The remainer of n/maxiumPosibleDigitToGenerate are the digits without converting to base 26
+    const leftDigits = n % maxiumPosibleDigitToGenerate;
+    console.log('leftDigits', leftDigits)
+    console.log('rightLetters', rightLetters)
+    return leftDigits.toString()+'-'+rightLetters.toString()
 
 
 
 
 }
+console.log('number 999999')
 console.log('result', getLicense(999999))
+console.log('---')
+console.log('number 1000000')
 console.log('result', getLicense(1000000))
+console.log('---')
+console.log('number 10000000')
 console.log('result', getLicense(10000000))
+console.log('---')
+console.log('number 100000000')
 console.log('result', getLicense(100000000))
 
 //console.log(getLicense(10000000000))
