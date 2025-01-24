@@ -2,7 +2,7 @@ function toBase26(val, length) {
     let result = '';
     for (let i = 0; i < length; i++) {
         const remainder = val % 26;
-        const letter = String.fromCharCode(65 + remainder);
+        const letter = String.fromCharCode(65 + remainder); // 'A'=65
         result = letter + result;
         val = Math.floor(val / 26);
     }
@@ -10,12 +10,15 @@ function toBase26(val, length) {
 }
 
 
+
 function findIntervalIndex(n, intervals) {
     for (let i = 0; i < intervals.length; ++i) {
-        if (i === 0 && n < intervals[i]) return i
-        else if (n >= intervals[i-1] && n < intervals[i]) return i
+        // If n is less than intervals[i], it lies in block i
+        if (n < intervals[i]) {
+            return i;
+        }
     }
-    throw new Error('Out of range')
+    throw new Error('Out of range');
 }
 
 
@@ -38,6 +41,10 @@ function getLicense(n) {
         10*numberOfLettersInTheAlphabet**5,  // -XXXXX
         numberOfLettersInTheAlphabet**6,  // XXXXXX
     ]
+    // Now we accumulate the interval to know where n should fit
+    for (let i = 1; i < intervals.length; i++) {
+        intervals[i] += intervals[i - 1];
+    }
     const intervalIndex = findIntervalIndex(n, intervals);
     //console.log('intervalIndex', intervalIndex)
     //The interval number of letters on the right side is equal to the intervalIndex (right side)
@@ -45,15 +52,27 @@ function getLicense(n) {
     //And 6-numberOfLettersInRightSide is equal to the number of digits on the left side
     const numbersOfDigitsInLeftSide = 6-numberOfLettersInRightSide;
     //And the maximum posible digit to generate now in the left side is 10^numbersOfDigitsInLeftSide
-    const maxiumPosibleDigitToGenerate =  10**numbersOfDigitsInLeftSide;
+    const maxiumPosibleDigitToGenerate =  10**(numbersOfDigitsInLeftSide);
 
+    // how far inside the bloc we are
+    let offset;
+    if (intervalIndex === 0) {
+        offset = n;
+    } else {
+        offset = n - intervals[intervalIndex - 1];
+    }
+    console.log('offset', offset)
+
+    console.log('intervalIndex', intervalIndex)
+    console.log('numberOfLettersInRightSide', numberOfLettersInRightSide)
+    console.log('numbersOfDigitsInLeftSide', numbersOfDigitsInLeftSide)
+    console.log('maxiumPosibleDigitToGenerate', maxiumPosibleDigitToGenerate)
     //The divider (without decimals) of n/maxiumPosibleDigitToGenerate are the letters (without converting to base 26)
-    const rightLetters =Math.floor( n / maxiumPosibleDigitToGenerate )
+    const rightLetters =Math.floor( offset / maxiumPosibleDigitToGenerate )
     //The remainer of n/maxiumPosibleDigitToGenerate are the digits without converting to base 26
-    const leftDigits = n % maxiumPosibleDigitToGenerate;
-    console.log('leftDigits', leftDigits)
-    console.log('rightLetters', rightLetters)
-    return leftDigits.toString()+'-'+rightLetters.toString()
+    const leftDigits = offset % maxiumPosibleDigitToGenerate;
+    console.log('before converting '+  leftDigits + "-"+rightLetters)
+    return leftDigits.toString()+'-'+toBase26(rightLetters, numberOfLettersInRightSide)
 
 
 
@@ -62,8 +81,8 @@ function getLicense(n) {
 console.log('number 999999')
 console.log('result', getLicense(999999))
 console.log('---')
-console.log('number 1000000')
-console.log('result', getLicense(1000000))
+console.log('number 1000001')
+console.log('result', getLicense(1000001))
 console.log('---')
 console.log('number 10000000')
 console.log('result', getLicense(10000000))
